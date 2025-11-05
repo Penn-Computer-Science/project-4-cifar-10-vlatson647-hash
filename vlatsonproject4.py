@@ -5,12 +5,11 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
-import cifar10
 import random
 
 # loads data set
-mnist = tf.keras.datasets.mnist
-(x_train, y_train), (x_test, y_test) = mnist.load_data()
+from keras.datasets import cifar10
+(x_train, y_train), (x_test, y_test) = cifar10.load_data()
 
 sns.countplot(x=y_train)
 plt.show()
@@ -30,8 +29,9 @@ x_test = x_test.reshape(x_test.shape[0], x_test.shape[1], x_test.shape[2], 1)
 x_test = x_test.astype('float32') / 255.0
 
 # convert our labels to be one-hot, not sparse
-y_train = tf.one_hot(y_train.astype(np.int32), depth =10)
-y_test = tf.one_hot(y_test.astype(np.int32), depth =10)
+from keras.utils import to_categorical
+y_train = to_categorical(y_train, 10)
+y_test = to_categorical(y_test, 10)
 
 # show an example image from MNIST
 plt.imshow(x_train[random.randint(0, 5999)][:,:,0], cmap="gray")
@@ -46,8 +46,8 @@ epochs = 10
 # builds model
 model = tf.keras.models.Sequential(
     [
-        tf.keras.layers.Conv2D(32, (5,5), padding='same', activation='relu', input_shape=input_shape),
-        tf.keras.layers.Conv2D(32, (3,3), padding='same', activation='relu', input_shape=input_shape),
+        tf.keras.layers.Conv2D(64, (5,5), padding='same', activation='relu', input_shape=input_shape),
+        tf.keras.layers.Conv2D(64, (3,3), padding='same', activation='relu', input_shape=input_shape),
         tf.keras.layers.MaxPool2D(),
         tf.keras.layers.Dropout(0.25), 
         tf.keras.layers.Conv2D(64, (3,3), padding='same', activation='relu', input_shape=input_shape),
@@ -57,9 +57,9 @@ model = tf.keras.models.Sequential(
     ]
 )
 
-model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['acc'])
+model.compile(optimizer='adam',loss='categorical_crossentropy', metrics=['accuracy'])
 
-history = model.fit(x_train, y_train, batch_size=batch_size, epochs=epochs, validation_data=(x_test, y_test))
+history = model.fit(x_train, y_train,epochs=10,validation_data=(x_test, y_test))
 
 
 # plot out training and validation accuracy and loss
