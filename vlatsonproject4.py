@@ -11,8 +11,8 @@ import random
 from keras.datasets import cifar10
 (x_train, y_train), (x_test, y_test) = cifar10.load_data()
 
-sns.countplot(x=y_train)
-plt.show()
+# sns.countplot(x=y_train)
+# plt.show()
 
 # check values to be sure there are no values that are not numbers
 print("Any NaN Training:", np.isnan(x_train).any())
@@ -23,9 +23,7 @@ print("Any NaN Testing:", np.isnan(x_test).any())
 input_shape = (32, 32, 3) 
 
 # reshape training and testing data
-x_train = x_train.reshape(x_train.shape[0], x_train.shape[1], x_train.shape[2], 1)
 x_train = x_train.astype('float32') / 255.0
-x_test = x_test.reshape(x_test.shape[0], x_test.shape[1], x_test.shape[2], 1)
 x_test = x_test.astype('float32') / 255.0
 
 # convert our labels to be one-hot, not sparse
@@ -34,7 +32,7 @@ y_train = to_categorical(y_train, 10)
 y_test = to_categorical(y_test, 10)
 
 # show an example image from MNIST
-plt.imshow(x_train[random.randint(0, 5999)][:,:,0], cmap="gray")
+plt.imshow(x_train[random.randint(0, 5999)][:,:,0])
 plt.show()
 
 
@@ -57,7 +55,7 @@ model = tf.keras.models.Sequential(
     ]
 )
 
-model.compile(optimizer='adam',loss='categorical_crossentropy', metrics=['accuracy'])
+model.compile(optimizer='adam',loss='categorical_crossentropy', metrics=['acc'])
 
 history = model.fit(x_train, y_train,epochs=10,validation_data=(x_test, y_test))
 
