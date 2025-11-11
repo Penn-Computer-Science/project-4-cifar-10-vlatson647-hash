@@ -39,7 +39,7 @@ plt.show()
 
 batch_size = 128
 num_classes = 10
-epochs = 10
+epochs = 5
 
 # builds model
 model = tf.keras.models.Sequential(
@@ -57,7 +57,7 @@ model = tf.keras.models.Sequential(
 
 model.compile(optimizer='adam',loss='categorical_crossentropy', metrics=['acc'])
 
-history = model.fit(x_train, y_train,epochs=10,validation_data=(x_test, y_test))
+history = model.fit(x_train, y_train,epochs=5,validation_data=(x_test, y_test))
 
 
 # plot out training and validation accuracy and loss
