@@ -41,7 +41,7 @@ Print the dataset shapes and visualize a few samples using matplotlib
 
   -  Use Adam optimzer and appropriate the loss
 ```python
-model.compile(optimizer='adam',loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+model.compile(optimizer='adam',loss='sparse_categorical_crossentropy', metrics=['acc'])
 ```
   -  Train for *at least* 10 epochs
 ```python
@@ -56,9 +56,9 @@ history = model.fit(x_train, y_train,epochs=10,validation_data=(x_test, y_test))
   -  Create at least one plot comparing training and validation accuracy
 ## Step 5. Reflection
  -  Add a short Markdown section at the end of your notebook:
-   -  What differences did you notice between MNIST and CIFAR-10?
-   -  What changes to your architecture helped performance?
-   -  If you had more time, what improvements would you try next?
+   -  What differences did you notice between MNIST and CIFAR-10? MNIST took way shorter and was far more accurate than CIFAR-10
+   -  What changes to your architecture helped performance? Some changes was removing a layer or two and adding more dropouts
+   -  If you had more time, what improvements would you try next? Probably add more epochs or add more layers
 
 ## Submission:
 Be sure to include the following in your submission - Push to GitHub with a comment of "FINISHED" when complete
