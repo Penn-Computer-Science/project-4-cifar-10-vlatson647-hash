@@ -58,12 +58,12 @@ epochs = 5
 # Model 2
 model = tf.keras.models.Sequential(
     [
-        tf.keras.layers.Conv2D(64, (3,3), padding='same', activation='relu', input_shape=input_shape),
+        tf.keras.layers.Conv2D(64, (5,5), padding='same', activation='relu', input_shape=input_shape),
         tf.keras.layers.Conv2D(64, (3,3), padding='same', activation='relu', input_shape=input_shape),
         # tf.keras.layers.MaxPool2D(),
-        tf.keras.layers.Dropout(0.30), 
-        # tf.keras.layers.Conv2D(64, (3,3), padding='same', activation='relu', input_shape=input_shape),
-        # tf.keras.layers.Conv2D(64, (3,3), padding='same', activation='relu', input_shape=input_shape),
+        tf.keras.layers.Dropout(0.25), 
+        tf.keras.layers.Conv2D(64, (3,3), padding='same', activation='relu', input_shape=input_shape),
+        tf.keras.layers.Conv2D(64, (5,5), padding='same', activation='relu', input_shape=input_shape),
         tf.keras.layers.Flatten(),
         tf.keras.layers.Dense(num_classes, activation='softmax'),
     ]
@@ -93,3 +93,4 @@ ax[1].set_ylabel('Accuracy')
 
 plt.tight_layout()
 plt.show()
+model.summary()
