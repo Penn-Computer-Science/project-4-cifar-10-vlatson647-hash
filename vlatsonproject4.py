@@ -8,8 +8,8 @@ import matplotlib.image as mpimg
 import random
 
 # loads data set
-from keras.datasets import cifar10
-(x_train, y_train), (x_test, y_test) = cifar10.load_data()
+from keras.datasets import cifar100
+(x_train, y_train), (x_test, y_test) = cifar100.load_data()
 
 # sns.countplot(x=y_train)
 # plt.show()
@@ -28,8 +28,8 @@ x_test = x_test.astype('float32') / 255.0
 
 # convert our labels to be one-hot, not sparse
 from keras.utils import to_categorical
-y_train = to_categorical(y_train, 10)
-y_test = to_categorical(y_test, 10)
+y_train = to_categorical(y_train, 100)
+y_test = to_categorical(y_test, 100)
 
 # show an example image from MNIST
 plt.imshow(x_train[random.randint(0, 5999)][:,:,0])
@@ -38,36 +38,36 @@ plt.show()
 
 
 batch_size = 128
-num_classes = 10
+num_classes = 100
 epochs = 5
 
 # builds model
 # Model 1
-# model = tf.keras.models.Sequential(
-#     [
-#         tf.keras.layers.Conv2D(64, (5,5), padding='same', activation='relu', input_shape=input_shape),
-#         tf.keras.layers.Conv2D(64, (3,3), padding='same', activation='relu', input_shape=input_shape),
-#         tf.keras.layers.MaxPool2D(),
-#         tf.keras.layers.Dropout(0.30), 
-#         tf.keras.layers.Conv2D(64, (3,3), padding='same', activation='relu', input_shape=input_shape),
-#         tf.keras.layers.Conv2D(64, (3,3), padding='same', activation='relu', input_shape=input_shape),
-#         tf.keras.layers.Flatten(),
-#         tf.keras.layers.Dense(num_classes, activation='softmax'),
-#     ]
-# )
-# Model 2
 model = tf.keras.models.Sequential(
     [
         tf.keras.layers.Conv2D(64, (5,5), padding='same', activation='relu', input_shape=input_shape),
         tf.keras.layers.Conv2D(64, (3,3), padding='same', activation='relu', input_shape=input_shape),
-        # tf.keras.layers.MaxPool2D(),
-        tf.keras.layers.Dropout(0.25), 
+        tf.keras.layers.MaxPool2D(),
+        tf.keras.layers.Dropout(0.30), 
         tf.keras.layers.Conv2D(64, (3,3), padding='same', activation='relu', input_shape=input_shape),
-        tf.keras.layers.Conv2D(64, (5,5), padding='same', activation='relu', input_shape=input_shape),
+        tf.keras.layers.Conv2D(64, (3,3), padding='same', activation='relu', input_shape=input_shape),
         tf.keras.layers.Flatten(),
         tf.keras.layers.Dense(num_classes, activation='softmax'),
     ]
 )
+# Model 2
+# model = tf.keras.models.Sequential(
+#     [
+#         tf.keras.layers.Conv2D(64, (5,5), padding='same', activation='relu', input_shape=input_shape),
+#         tf.keras.layers.Conv2D(64, (3,3), padding='same', activation='relu', input_shape=input_shape),
+#         # tf.keras.layers.MaxPool2D(),
+#         tf.keras.layers.Dropout(0.25), 
+#         tf.keras.layers.Conv2D(64, (3,3), padding='same', activation='relu', input_shape=input_shape),
+#         tf.keras.layers.Conv2D(64, (5,5), padding='same', activation='relu', input_shape=input_shape),
+#         tf.keras.layers.Flatten(),
+#         tf.keras.layers.Dense(num_classes, activation='softmax'),
+#     ]
+# )
 
 model.compile(optimizer='adam',loss='categorical_crossentropy', metrics=['acc'])
 
